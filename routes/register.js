@@ -13,7 +13,7 @@ router.post("/", async function (req, res) {
     const findUser = await User.findOne({ name });
 
     if (findUser) {
-      return res.status(400).send({ error: "Esse usuário já existe :(" });
+      return res.status(400).send({ error: "Esse usuário já existe." });
     }
 
     // creating a new mongoose doc from user data
@@ -24,7 +24,11 @@ router.post("/", async function (req, res) {
 
     // now we set user password to hashed password
     user.password = await bcrypt.hash(user.password, salt);
-    user.save().then((doc) => res.status(201).send(doc));
+    user
+      .save()
+      .then((doc) =>
+        res.status(201).send({ message: `Olá ${doc.name}!` })
+      );
   } catch (err) {
     return res
       .status(400)
