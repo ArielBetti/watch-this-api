@@ -8,7 +8,9 @@ const List = require("../models/List");
 router.get("/", verifyJWT, async function (req, res) {
   const param = req.query;
 
-  const findList = await List.find({ create_by: param.user_name });
+  const findList = await List.find({
+    create_by: { $regex: new RegExp(param.user_name, "i") },
+  });
 
   if (!findList) {
     return res.status(201).send({

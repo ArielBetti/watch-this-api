@@ -10,7 +10,9 @@ router.post("/", async function (req, res) {
   const { name } = req.body;
 
   try {
-    const findUser = await User.findOne({ name });
+    const findUser = await User.findOne({
+      name: { $regex: new RegExp(name, "i") },
+    });
 
     if (findUser) {
       return res.status(400).send({ error: "Esse usuário já existe." });
@@ -26,9 +28,7 @@ router.post("/", async function (req, res) {
     user.password = await bcrypt.hash(user.password, salt);
     user
       .save()
-      .then((doc) =>
-        res.status(201).send({ message: `Olá ${doc.name}!` })
-      );
+      .then((doc) => res.status(200).send({ message: `Olá ${doc.name}!` }));
   } catch (err) {
     return res
       .status(400)

@@ -10,8 +10,6 @@ router.delete("/", verifyJWT, async function (req, res) {
 
   const findList = await List.findOne({ id: body.id });
 
-  console.log("@@#", body);
-
   if (!findList) {
     return res.status(404).send({
       error: true,

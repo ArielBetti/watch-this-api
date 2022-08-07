@@ -10,12 +10,14 @@ const User = require("../models/User");
 /* GET users listing. */
 router.post("/", async function (req, res) {
   const body = req.body;
-  const user = await User.findOne({ name: body.name });
+  const user = await User.findOne({
+    name: { $regex: new RegExp(body.name, "i") },
+  });
 
   if (user) {
-    // check user password with hashed password stored in the database
-
-    User.findOne({ name: body.name })
+    User.findOne({
+      name: { $regex: new RegExp(body.name, "i") },
+    })
       .select("password")
       .exec(async function (__err, userInfo) {
         if (userInfo.password && body.password) {
