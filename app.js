@@ -1,9 +1,10 @@
+require("dotenv").config();
+var cors = require("cors");
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
 var userRegisterRouter = require("./routes/register");
 var userLoginRouter = require("./routes/login");
 var userLogoutRouter = require("./routes/logout");
@@ -14,6 +15,17 @@ var putUserListRouter = require("./routes/putUserList");
 var deleteUserListRouter = require("./routes/deleteUserList");
 
 var app = express();
+
+// Add a list of allowed origins.
+// If you have more origins you would like to add, you can add them to the array below.
+const allowedOrigins = [process.env.CORS_ALLOWED_ORIGIN];
+
+const options = {
+  origin: allowedOrigins,
+};
+
+// Then pass these options to cors:
+app.use(cors(options));
 
 app.use(logger("dev"));
 app.use(express.json());
