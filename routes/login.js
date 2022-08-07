@@ -39,14 +39,16 @@ router.post("/", async function (req, res) {
               .status(200)
               .json({ message: "Usuário logado!", user, token });
           } else {
-            res.status(400).json({ error: "Senha incorreta" });
+            res.status(400).json({ error: true, message: "Senha incorreta" });
           }
         } else {
-          return res.status(401).json({ error: "Digite uma senha." });
+          return res
+            .status(400)
+            .json({ error: true, message: "Digite uma senha." });
         }
       });
   } else {
-    res.status(401).json({ error: "Usuário não encontrado." });
+    res.status(404).json({ error: true, message: "Usuário não encontrado." });
   }
 });
 

@@ -13,7 +13,7 @@ router.post("/", verifyJWT, async function (req, res) {
   const findList = await List.findOne({ id });
 
   if (findList) {
-    return res.status(401).send({
+    return res.status(400).send({
       error: true,
       message:
         "Ocorreu um erro no cadastro da lista, por favor tente novamente.",

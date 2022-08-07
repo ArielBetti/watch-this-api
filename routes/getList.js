@@ -10,7 +10,7 @@ router.get("/", async function (req, res) {
   const findList = await List.findOne({ id: param.id });
 
   if (!findList) {
-    return res.status(201).send({
+    return res.status(404).send({
       error: true,
       message: "Não encontramos essa lista.",
     });
