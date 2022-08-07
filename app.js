@@ -8,6 +8,10 @@ var userRegisterRouter = require("./routes/register");
 var userLoginRouter = require("./routes/login");
 var userLogoutRouter = require("./routes/logout");
 var createListRouter = require("./routes/createList");
+var getListRouter = require("./routes/getList");
+var getUserListsRouter = require("./routes/getUserList");
+var putUserListRouter = require("./routes/putUserList");
+var deleteUserListRouter = require("./routes/deleteUserList");
 
 var app = express();
 
@@ -21,6 +25,10 @@ app.use("/register", userRegisterRouter);
 app.use("/login", userLoginRouter);
 app.use("/logout", userLogoutRouter);
 app.use("/create-list", createListRouter);
+app.use("/get-list", getListRouter);
+app.use("/get-user-lists", getUserListsRouter);
+app.use("/put-user-list", putUserListRouter);
+app.use("/delete-user-list", deleteUserListRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -6,10 +6,6 @@ mongoose.connect(
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-  },
-  (err) => {
-    if (!err) console.log("MongoDB has connected successfully.");
-    if (err) console.log("@!erro", err);
   }
 );
 mongoose.Promise = global.Promise;
