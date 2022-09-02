@@ -15,7 +15,9 @@ router.post("/", async function (req, res) {
     });
 
     if (findUser) {
-      return res.status(400).send({ error: "Esse usuário já existe." });
+      return res
+        .status(400)
+        .send({ error: true, message: "Esse usuário já existe." });
     }
 
     // creating a new mongoose doc from user data
