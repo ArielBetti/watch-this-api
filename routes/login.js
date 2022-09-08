@@ -11,12 +11,12 @@ const User = require("../models/User");
 router.post("/", async function (req, res) {
   const body = req.body;
   const user = await User.findOne({
-    name: { $regex: new RegExp(body.name, "i") },
+    name: { $regex: `^${body.name}$`, $options: "igm" },
   });
 
   if (user) {
     User.findOne({
-      name: { $regex: new RegExp(body.name, "i") },
+      name: { $regex: `^${body.name}$`, $options: 'igm' },
     })
       .select("password")
       .exec(async function (__err, userInfo) {

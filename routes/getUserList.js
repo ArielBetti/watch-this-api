@@ -9,7 +9,7 @@ router.get("/", verifyJWT, async function (req, res) {
   const param = req.query;
 
   const findList = await List.find({
-    create_by: { $regex: new RegExp(param.user_name, "i") },
+    create_by: { $regex: `^${param.user_name}$`, $options: "igm" },
   });
 
   if (!findList) {

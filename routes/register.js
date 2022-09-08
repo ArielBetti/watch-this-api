@@ -11,7 +11,7 @@ router.post("/", async function (req, res) {
 
   try {
     const findUser = await User.findOne({
-      name: { $regex: new RegExp(name, "i") },
+      name: { $regex: `^${name}$`, $options: 'igm' },
     });
 
     if (findUser) {
