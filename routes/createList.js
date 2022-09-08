@@ -2,15 +2,35 @@ var express = require("express");
 var router = express.Router();
 const crypto = require("crypto");
 const verifyJWT = require("../middleware");
+const parseJwt = require("../utils/parseJwt");
 
 // models
 const List = require("../models/List");
+const User = require("../models/User");
 
 router.post("/", verifyJWT, async function (req, res) {
   const body = req.body;
-  const id = crypto.randomBytes(5).toString("hex");
+  const listId = crypto.randomBytes(5).toString("hex");
 
-  const findList = await List.findOne({ id });
+  const { id } = parseJwt(req.headers.authorization);
+
+  const user = await User.findById(id);
+
+  const findList = await List.findOne({ id: listId });
+
+  if (!user) {
+    return res.status(401).send({
+      error: true,
+      message: "Ocorreu um erro na sua sessão, por favor refaça o seu login",
+    });
+  }
+
+  if (body?.create_by || body?.create_byId) {
+    return res.status(400).send({
+      error: true,
+      message: "Parametros inválidos",
+    });
+  }
 
   if (findList) {
     return res.status(400).send({
@@ -27,14 +47,6 @@ router.post("/", verifyJWT, async function (req, res) {
     });
   }
 
-  if (!body.create_by) {
-    return res.status(400).send({
-      error: true,
-      message:
-        "Ocorreu um erro com a sua sessão por favor faça login novamente.",
-    });
-  }
-
   if (!body.list || body.list.length <= 0) {
     return res.status(400).send({
       error: true,
@@ -43,8 +55,10 @@ router.post("/", verifyJWT, async function (req, res) {
   }
 
   const response = {
+    create_by: user?.name,
+    create_byId: user?._id,
+    id: listId,
     ...body,
-    id,
   };
 
   const list = new List(response);
