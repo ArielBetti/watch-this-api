@@ -1,7 +1,9 @@
 var express = require("express");
 var router = express.Router();
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const authServices = require("../services/auth");
+
+const { comparePasswords, generateToken } = authServices;
+
 require("dotenv").config();
 
 // models
@@ -16,24 +18,18 @@ router.post("/", async function (req, res) {
 
   if (user) {
     User.findOne({
-      name: { $regex: `^${body.name}$`, $options: 'igm' },
+      name: { $regex: `^${body.name}$`, $options: "igm" },
     })
       .select("password")
       .exec(async function (__err, userInfo) {
         if (userInfo.password && body.password) {
-          const validPassword = await bcrypt.compare(
+          const validPassword = await comparePasswords(
             body.password,
             userInfo.password
           );
 
           if (validPassword) {
-            const token = jwt.sign(
-              { id: user._id },
-              process.env.JWT_SECRET_KEY,
-              {
-                expiresIn: 10800000, // expires in 3hours
-              }
-            );
+            const token = generateToken(user.toJSON());
 
             return res
               .status(200)

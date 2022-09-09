@@ -1,20 +1,15 @@
 var express = require("express");
 var router = express.Router();
 const verifyJWT = require("../middleware");
-const parseJwt = require("../utils/parseJwt");
-
 
 // models
 const List = require("../models/List");
-const User = require("../models/User");
 
 router.get("/", verifyJWT, async function (req, res) {
-  const { id } = parseJwt(req?.headers?.authorization);
-
-  const user = await User.findById(id);
+  const { _id: id } = req.decoded;
 
   const findList = await List.find({
-    create_by: { $regex: `^${user?.name}$`, $options: "igm" },
+    create_byId: id,
   });
 
   if (!findList) {

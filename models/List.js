@@ -15,54 +15,57 @@ const listSchema = new Schema({
     require: true,
   },
   create_byId: {
-    type: String,
-    require: true,
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
     select: false,
   },
   list: {
-    type: [{
-      adult: {
-        type: Boolean,
-        require: true,
+    type: [
+      {
+        adult: {
+          type: Boolean,
+          require: true,
+        },
+        backdrop_path: {
+          type: String,
+          require: true,
+        },
+        genres: {
+          type: [
+            {
+              id: Number,
+              name: String,
+            },
+          ],
+          require: true,
+        },
+        id: {
+          type: Number,
+          require: true,
+        },
+        imdb_id: {
+          type: String,
+          require: true,
+        },
+        overview: {
+          type: String,
+          require: true,
+        },
+        poster_path: {
+          type: String,
+          require: true,
+        },
+        title: {
+          type: String,
+          require: true,
+        },
+        vote_average: {
+          type: String,
+          require: true,
+        },
       },
-      backdrop_path: {
-        type: String,
-        require: true,
-      },
-      genres: {
-        type: [
-          {
-            id: Number,
-            name: String,
-          },
-        ],
-        require: true,
-      },
-      id: {
-        type: Number,
-        require: true,
-      },
-      imdb_id: {
-        type: String,
-        require: true,
-      },
-      overview: {
-        type: String,
-        require: true,
-      },
-      poster_path: {
-        type: String,
-        require: true,
-      },
-      title: {
-        type: String,
-        require: true,
-      },
-      vote_average: {
-        type: String,
-        require: true,
-      },
-    }],
+    ],
     require: true,
   },
 });

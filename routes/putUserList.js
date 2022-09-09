@@ -1,18 +1,14 @@
 var express = require("express");
 var router = express.Router();
 const verifyJWT = require("../middleware");
-const parseJwt = require("../utils/parseJwt");
 
 // models
 const List = require("../models/List");
-const User = require("../models/User");
 
 router.put("/", verifyJWT, async function (req, res) {
   const body = req.body;
 
-  const { id } = parseJwt(req.headers.authorization);
-
-  const findById = await User.findById(id);
+  const { _id: id } = req.decoded;
 
   const findList = await List.findOne({ id: body.id }).select("create_byId");
 
@@ -23,7 +19,7 @@ router.put("/", verifyJWT, async function (req, res) {
     });
   }
 
-  if (findById?._id?.toString() !== findList?.create_byId) {
+  if (id !== findList?.create_byId) {
     return res.status(401).send({
       error: true,
       message: "Essa lista não pertence a esse usuário",

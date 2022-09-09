@@ -2,23 +2,19 @@ var express = require("express");
 var router = express.Router();
 const crypto = require("crypto");
 const verifyJWT = require("../middleware");
-const parseJwt = require("../utils/parseJwt");
 
 // models
 const List = require("../models/List");
-const User = require("../models/User");
 
 router.post("/", verifyJWT, async function (req, res) {
   const body = req.body;
   const listId = crypto.randomBytes(5).toString("hex");
 
-  const { id } = parseJwt(req.headers.authorization);
-
-  const user = await User.findById(id);
+  const { _id: id, name } = req.decoded;
 
   const findList = await List.findOne({ id: listId });
 
-  if (!user) {
+  if (!id) {
     return res.status(401).send({
       error: true,
       message: "Ocorreu um erro na sua sessão, por favor refaça o seu login",
@@ -55,8 +51,8 @@ router.post("/", verifyJWT, async function (req, res) {
   }
 
   const response = {
-    create_by: user?.name,
-    create_byId: user?._id,
+    create_by: name,
+    create_byId: id,
     id: listId,
     ...body,
   };
