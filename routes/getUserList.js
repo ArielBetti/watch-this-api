@@ -13,12 +13,10 @@ router.get("/", verifyJWT, async function (req, res) {
   });
 
   if (!findList) {
-    return res.status(201).send({
-      lists: [],
-    });
+    return res.status(201).send([]);
   }
 
-  return res.status(200).send({ lists: findList });
+  return res.status(200).send(findList);
 });
 
 module.exports = router;

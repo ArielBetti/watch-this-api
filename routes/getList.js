@@ -16,7 +16,7 @@ router.get("/", async function (req, res) {
     });
   }
 
-  return res.status(200).send({ list: findList });
+  return res.status(200).send(findList);
 });
 
 module.exports = router;
