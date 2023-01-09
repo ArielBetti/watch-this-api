@@ -20,6 +20,18 @@ const listSchema = new Schema({
     required: true,
     select: false,
   },
+  avatar: {
+    type: {
+      accessoires: [String],
+      backgroundColor: [String],
+      eyes: [String],
+      eyebrows: [String],
+      mouth: [String],
+      flip: Boolean,
+      url: String,
+    },
+    require: true,
+  },
   list: {
     type: [
       {

@@ -10,7 +10,7 @@ router.post("/", verifyJWT, async function (req, res) {
   const body = req.body;
   const listId = crypto.randomBytes(5).toString("hex");
 
-  const { _id: id, name } = req.decoded;
+  const { _id: id, name, avatar } = req.decoded;
 
   const findList = await List.findOne({ id: listId });
 
@@ -51,6 +51,7 @@ router.post("/", verifyJWT, async function (req, res) {
   }
 
   const response = {
+    avatar: avatar,
     create_by: name,
     create_byId: id,
     id: listId,
