@@ -70,7 +70,11 @@ const listSchema = new Schema({
         },
         title: {
           type: String,
-          require: true,
+          require: false,
+        },
+        name: {
+          type: String,
+          require: false,
         },
         vote_average: {
           type: String,
