@@ -10,7 +10,7 @@ router.get("/", verifyJWT, async function (req, res) {
 
   const findList = await List.find({
     create_byId: id,
-  });
+  }).sort({created_at: -1});
 
   if (!findList) {
     return res.status(201).send([]);

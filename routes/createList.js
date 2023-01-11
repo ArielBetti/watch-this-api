@@ -52,6 +52,8 @@ router.post("/", verifyJWT, async function (req, res) {
 
   const response = {
     avatar: avatar,
+    created_at: new Date(),
+    updated_at: new Date(),
     create_by: name,
     create_byId: id,
     id: listId,

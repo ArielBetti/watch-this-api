@@ -14,6 +14,14 @@ const listSchema = new Schema({
     type: String,
     require: true,
   },
+  created_at: {
+    type: String,
+    require: true,
+  },
+  updated_at: {
+    type: String,
+    require: true,
+  },
   create_byId: {
     type: Schema.Types.ObjectId,
     ref: "User",
