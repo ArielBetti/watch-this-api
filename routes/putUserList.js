@@ -19,7 +19,7 @@ router.put("/", verifyJWT, async function (req, res) {
     });
   }
 
-  if (id !== findList?.create_byId) {
+  if (id !== findList?.create_byId.toString()) {
     return res.status(401).send({
       error: true,
       message: "Essa lista não pertence a esse usuário",
@@ -34,7 +34,7 @@ router.put("/", verifyJWT, async function (req, res) {
   }
 
   const filter = { id: body.id };
-  const update = { list: body.list };
+  const update = { list: body.list, title: body.title, };
 
   let doc = await List.findOneAndUpdate(filter, update, {
     new: true,
