@@ -15,11 +15,11 @@ const listSchema = new Schema({
     require: true,
   },
   created_at: {
-    type: String,
+    type: Date,
     require: true,
   },
   updated_at: {
-    type: String,
+    type: Date,
     require: true,
   },
   create_byId: {
