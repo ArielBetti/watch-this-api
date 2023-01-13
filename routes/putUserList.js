@@ -42,7 +42,7 @@ router.put("/", verifyJWT, async function (req, res) {
 
   return res
     .status(200)
-    .send({ message: "Lista atualizada com sucesso!", list: doc.list });
+    .send({ message: "Lista atualizada com sucesso!", ...body, list: doc.list });
 });
 
 module.exports = router;
