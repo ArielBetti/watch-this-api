@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    expose:
+      - 27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017
+  watchthis-api:
+    image: watchthis-api
+    ports:
+      - 8080:8080
+    environment:
+      - DATA_BASE_CONNECTION_STRING=mongodb://root:root@mongo:27017
+      - JWT_SECRET_KEY=dasdsad64as84d897sad6w54e98as7d6as54d
+      - CORS_ALLOWED_ORIGIN=*
+    depends_on:
+      - mongo
