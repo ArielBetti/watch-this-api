@@ -22,7 +22,7 @@ const allowedOrigins = process.env.CORS_ALLOWED_ORIGIN.split(',');
 
 const options = {
   origin: (origin, callback) => {
-    const allowed = allowedOrigins.includes(origin)
+    const allowed = allowedOrigins.includes(origin) || allowedOrigins.includes('*')
 
     if (!allowed) callback(new Error('Not allowed by CORS'))
     else callback(null, true)
