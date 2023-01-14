@@ -18,10 +18,15 @@ var app = express();
 
 // Add a list of allowed origins.
 // If you have more origins you would like to add, you can add them to the array below.
-const allowedOrigins = [process.env.CORS_ALLOWED_ORIGIN];
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGIN.split(',');
 
 const options = {
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    const allowed = allowedOrigins.includes(origin) || allowedOrigins.includes('*')
+
+    if (!allowed) callback(new Error('Not allowed by CORS'))
+    else callback(null, true)
+  },
 };
 
 // Then pass these options to cors:
