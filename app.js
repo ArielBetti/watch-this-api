@@ -21,7 +21,7 @@ var app = express();
 const allowedOrigins = [process.env.CORS_ALLOWED_ORIGIN];
 
 const options = {
-  origin: allowedOrigins,
+  origin: (origin, callback) => callback(null, { origin: allowedOrigins.includes(origin) }),
 };
 
 // Then pass these options to cors:
