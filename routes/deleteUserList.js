@@ -19,7 +19,7 @@ router.delete("/", verifyJWT, async function (req, res) {
     });
   }
 
-  if (id !== findList?.create_byId) {
+  if (id !== findList?.create_byId.toString()) {
     return res.status(401).send({
       error: true,
       message: "Essa lista não pertence a esse usuário",
