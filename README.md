@@ -20,6 +20,9 @@ CORS_ALLOWED_ORIGIN='{{your application url ex: https://watch-this.vercel.app}}'
 `npm run dev`
 
 
+## TODO
+[] Refact to typeScript
+
 ## License
 
 MIT
